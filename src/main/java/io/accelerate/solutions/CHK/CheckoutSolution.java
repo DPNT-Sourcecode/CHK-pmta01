@@ -9,6 +9,7 @@ public class CheckoutSolution {
             var ccount = getItemCount(skus, 'C');
             var dcount = getItemCount(skus, 'D');
             var ecount = getItemCount(skus, 'E');
+            var fcount = getItemCount(skus, 'F');
 
             var cprice = ccount * 20;
             var dprice = dcount * 15;
@@ -30,17 +31,30 @@ public class CheckoutSolution {
                 ecount -= 2;
             }
             var bprice = ((bcount / 2) * 45) + ((bcount % 2) * 30);
+
+            if(fcount > 2) {
+
+            }
+
             return cprice + dprice + aprice + bprice + eprice;
         }
         return -1;
     }
 
     private boolean skusAccepted(String skus) {
-        return skus != null && skus.chars().allMatch(ch -> ch == 'A' || ch == 'B' || ch == 'C' || ch == 'D' || ch == 'E');
+        return skus != null && skus.chars()
+                .allMatch(ch -> ch == 'A' || ch == 'B' || ch == 'C' || ch == 'D' || ch == 'E' || ch == 'F');
     }
 
     private int getItemCount(String skus, char i) {
         return (int) skus.chars().filter(a -> a == i).count();
     }
+
+
+//    private static class Item {
+//        private char sku;
+//        private int price;
+//    }
 }
+
 
