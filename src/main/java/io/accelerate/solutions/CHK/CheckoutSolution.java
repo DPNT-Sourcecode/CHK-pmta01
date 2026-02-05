@@ -15,12 +15,14 @@ public class CheckoutSolution {
             var dprice = dcount * 15;
             var eprice = ecount * 40;
             var aprice = ((acount / 3) * 130) + ((acount % 3) * 50);
-            if (ecount >= 2) {
-
-                var bprice = ((bcount / 2) * 45) + ((bcount % 2) * 30);
+            while (ecount >= 2) {
+                bcount -= 1;
+                ecount -= 2;
             }
+            var bprice = ((bcount / 2) * 45) + ((bcount % 2) * 30);
             return cprice + dprice + aprice + bprice + eprice;
         }
         return -1;
     }
 }
+
