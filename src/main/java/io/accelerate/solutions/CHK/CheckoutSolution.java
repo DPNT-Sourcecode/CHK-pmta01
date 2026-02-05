@@ -45,17 +45,13 @@ public class CheckoutSolution {
     }
 
     private boolean skusAccepted(String skus) {
-        return skus != null && skus.chars()
-                .allMatch(ch -> ch == 'A' || ch == 'B' || ch == 'C' || ch == 'D' || ch == 'E' || ch == 'F');
+        return skus != null && skus.matches("[A-Z]+");
     }
 
     private int getItemCount(String skus, char i) {
         return (int) skus.chars().filter(a -> a == i).count();
     }
 
-
-//    private static class Item {
-//        private char sku;
-//        private int price;
-//    }
+    private record Item(char sku, int price) {
+    }
 }
