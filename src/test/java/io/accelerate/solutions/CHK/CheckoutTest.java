@@ -22,6 +22,10 @@ public class CheckoutTest {
         final String sku9 = "AEB";
         final String sku10 = "CDEEB";
         final String sku11 = "CBABBDEEEE";
+        final String sku12 = "AAAAA";
+        final String sku13 = "AAAAAAAA";
+        final String sku14 = "AAAAAA";
+        final String sku15 = "AAAAAAAAAA";
 
         assertEquals(115, (int) checkoutSolution.checkout(sku1));
         assertEquals(165, (int) checkoutSolution.checkout(sku2));
@@ -34,6 +38,11 @@ public class CheckoutTest {
         assertEquals(120, (int) checkoutSolution.checkout(sku9));
         assertEquals(115, (int) checkoutSolution.checkout(sku10));
         assertEquals(275, (int) checkoutSolution.checkout(sku11));
+        assertEquals(200, (int) checkoutSolution.checkout(sku12));
+        assertEquals(330, (int) checkoutSolution.checkout(sku13));
+        assertEquals(250, (int) checkoutSolution.checkout(sku14));
+        assertEquals(400, (int) checkoutSolution.checkout(sku15));
+
     }
 
     @Test
@@ -47,4 +56,5 @@ public class CheckoutTest {
         assertEquals(-1, checkoutSolution.checkout(nonValidSku4));
     }
 }
+
 

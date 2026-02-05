@@ -14,10 +14,13 @@ public class CheckoutSolution {
             var cprice = ccount * 20;
             var dprice = dcount * 15;
             var eprice = ecount * 40;
-            while(acount>=5) {
-                acount / 5) * 200
+
+            var bonusAprice = 0;
+            while (acount >= 5) {
+                bonusAprice += (acount / 5) * 200;
+                acount -= 5;
             }
-            var aprice = ((acount / 3) * 130) + ((acount % 3) * 50);
+            var aprice = ((acount / 3) * 130) + ((acount % 3) * 50) + bonusAprice;
 
             while (ecount >= 2 && bcount > 0) {
                 bcount -= 1;
@@ -29,6 +32,7 @@ public class CheckoutSolution {
         return -1;
     }
 }
+
 
 
 
