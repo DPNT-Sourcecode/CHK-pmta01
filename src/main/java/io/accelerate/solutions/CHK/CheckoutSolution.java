@@ -1,25 +1,28 @@
 package io.accelerate.solutions.CHK;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CheckoutSolution {
     public Integer checkout(String skus) {
 
-        if (skusAccepted(skus)) {
-            var acount = getItemCount(skus, 'A');
-            var bcount = getItemCount(skus, 'B');
-            var ccount = getItemCount(skus, 'C');
-            var dcount = getItemCount(skus, 'D');
-            var ecount = getItemCount(skus, 'E');
-            var fcount = getItemCount(skus, 'F');
+        if (skuIsValid(skus)) {
+            var acount = itemsCount(skus, 'A');
+            var bcount = itemsCount(skus, 'B');
+            var ccount = itemsCount(skus, 'C');
+            var dcount = itemsCount(skus, 'D');
+            var ecount = itemsCount(skus, 'E');
+            var fcount = itemsCount(skus, 'F');
 
-            var cprice = ccount * 20;
-            var dprice = dcount * 15;
-            var eprice = ecount * 40;
+            var cprice = ccount.get('C') * 20;
+            var dprice = dcount.get('D') * 15;
+            var eprice = ecount.get('E') * 40;
 
             var bonusAprice = 0;
-            while (acount >= 5) {
-                bonusAprice += (acount / 5) * 200;
-                if (acount % 5 == 0) {
-                    acount = 0;
+            while (acount.get('A') >= 5) {
+                bonusAprice += (acount.get('A') / 5) * 200;
+                if (acount.get('A') % 5 == 0) {
+                    acount.get('A') = 0;
                     break;
                 }
                 acount -= 5;
@@ -44,15 +47,20 @@ public class CheckoutSolution {
         return -1;
     }
 
-    private boolean skusAccepted(String skus) {
+    private boolean skuIsValid(String skus) {
         return skus != null && skus.matches("^[A-Z]*$");
     }
 
-    private int getItemCount(String skus, char i) {
-        return (int) skus.chars().filter(a -> a == i).count();
+    private Map<Character, Integer> itemsCount(String skus, char i) {
+        Map<Character, Integer> itemsCountMap = new HashMap<>();
+        skus.chars().forEach(
+                ch -> itemsCountMap.put((char) ch, (int) skus.chars().filter(a -> a == i).count()));
+
+        return itemsCountMap;
     }
 
     private record Item(char sku, int price) {
     }
 }
+
 
