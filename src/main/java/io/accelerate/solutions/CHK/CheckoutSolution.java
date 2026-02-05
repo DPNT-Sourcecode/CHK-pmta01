@@ -64,6 +64,3 @@ public class CheckoutSolution {
     private record Item(char sku, int price) {
     }
 }
-
-
-
