@@ -94,7 +94,7 @@ public class CheckoutSolution {
         return totalPrice;
     }
 
-    private int sameItemDiscountsOffer(char sku, int effectiveOfferCount) {
+    private int sameItemDiscountsOffer(char sku, int effectiveOfferCount, int discountedPrice, String skus) {
         if (itemsWithBatchDiscounts.contains(sku)) {
             var totalPrice = 0;
             switch (sku) {  // todo refactor to use another logic instead of switch case
@@ -109,13 +109,16 @@ public class CheckoutSolution {
                         acount -= 5;
                     }
                     var aprice = ((acount / 3) * 130) + ((acount % 3) * 50) + bonusAprice;
+                    break;
                 }
 
                 case 'B':
                 case 'K':
                 case 'P':
                 case 'Q': {
-                    totalPrice += ((bcount / 2) * 45) + ((bcount % 2) * 30);
+                    totalPrice += (  / effectiveOfferCount) *discountedPrice)
+                    +((bcount % effectiveOfferCount) * PRICE_BY_SKU.get(sku));
+                    break;
                 }
 
                 case 'F':
@@ -130,3 +133,4 @@ public class CheckoutSolution {
 //    }
 
 }
+
