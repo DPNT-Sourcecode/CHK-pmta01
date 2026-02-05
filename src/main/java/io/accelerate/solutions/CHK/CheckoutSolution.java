@@ -94,18 +94,18 @@ public class CheckoutSolution {
         return totalPrice;
     }
 
-    private int sameItemDiscountsOffer(char sku, int itemCount) {
+    private int sameItemDiscountsOffer(char sku, int effectiveOfferCount) {
         if(itemsWithBatchDiscounts.contains(sku)) {
-            switch (sku) {
-                case '':
-                case '':
-                case '':
-                case '':
-                case '':
-                case '':
-                case '':
-                case '':
-                case '':
+            switch (sku) {  // todo refactor to use another logic instead of switch case
+                case 'A':
+                case 'B':
+                case 'F':
+                case 'H':
+                case 'K':
+                case 'P':
+                case 'Q':
+                case 'U':
+                case 'V':
             }
         } else return 0;
     }
@@ -114,4 +114,5 @@ public class CheckoutSolution {
 //    }
 
 }
+
 
