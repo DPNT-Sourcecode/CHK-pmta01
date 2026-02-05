@@ -65,6 +65,3 @@ public class CheckoutTest {
         assertEquals(-1, checkoutSolution.checkout(nonValidSku4));
     }
 }
-
-
-

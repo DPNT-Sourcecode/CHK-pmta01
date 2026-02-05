@@ -3,8 +3,7 @@ package io.accelerate.solutions.CHK;
 public class CheckoutSolution {
     public Integer checkout(String skus) {
 
-        if (skus != null && skus.chars()
-                .allMatch(ch -> ch == 'A' || ch == 'B' || ch == 'C' || ch == 'D' || ch == 'E')) {
+        if (skusAccepted(skus)) {
             var acount = (int) skus.chars().filter(a -> a == 'A').count();
             var bcount = (int) skus.chars().filter(b -> b == 'B').count();
             var ccount = (int) skus.chars().filter(c -> c == 'C').count();
@@ -35,5 +34,10 @@ public class CheckoutSolution {
         }
         return -1;
     }
-}
 
+    private boolean skusAccepted(String skus) {
+        if (skus != null && skus.chars()
+                .allMatch(ch -> ch == 'A' || ch == 'B' || ch == 'C' || ch == 'D' || ch == 'E')
+        return true;
+    }
+}
