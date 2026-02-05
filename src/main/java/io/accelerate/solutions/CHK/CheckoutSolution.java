@@ -24,6 +24,3 @@ public class CheckoutSolution {
         return -1;
     }
 }
-
-
-
