@@ -40,7 +40,7 @@ public class CheckoutSolution {
     public Integer checkout(String skus) {
         if (skuIsValid(skus)) {
 
-            var itemsWithoutOfferPrice = itemsWithoutOfferTotalPrice(itemsCount(skus));
+            var itemsWithoutOfferPrice = itemsWithoutOfferTotalPrice(getItemsCount(skus));
 
             var bonusAprice = 0;
             while (acount.get('A') >= 5) {
@@ -75,7 +75,7 @@ public class CheckoutSolution {
         return skus != null && skus.matches("^[A-Z]*$"); //todo refactor to validate against PRICE_BY_SKU map
     }
 
-    private Map<Character, Integer> itemsCount(String skus) {
+    private Map<Character, Integer> getItemsCount(String skus) {
         Map<Character, Integer> itemsCountMap = new HashMap<>();
         skus.chars().forEach(ch -> itemsCountMap.merge((char) ch, 1, Integer::sum));
         return itemsCountMap;
@@ -95,15 +95,31 @@ public class CheckoutSolution {
     }
 
     private int sameItemDiscountsOffer(char sku, int effectiveOfferCount) {
-        if(itemsWithBatchDiscounts.contains(sku)) {
+        if (itemsWithBatchDiscounts.contains(sku)) {
+            var totalPrice = 0;
             switch (sku) {  // todo refactor to use another logic instead of switch case
-                case 'A':
+                case 'A': {
+                    var bonusAprice = 0;
+                    while (acount.get('A') >= 5) {
+                        bonusAprice += (acount.get('A') / 5) * 200;
+                        if (acount.get('A') % 5 == 0) {
+                            acount.put('A', 0);
+                            break;
+                        }
+                        acount -= 5;
+                    }
+                    var aprice = ((acount / 3) * 130) + ((acount % 3) * 50) + bonusAprice;
+                }
+
                 case 'B':
-                case 'F':
-                case 'H':
                 case 'K':
                 case 'P':
-                case 'Q':
+                case 'Q': {
+                    totalPrice += ((bcount / 2) * 45) + ((bcount % 2) * 30);
+                }
+
+                case 'F':
+                case 'H':
                 case 'U':
                 case 'V':
             }
@@ -114,5 +130,6 @@ public class CheckoutSolution {
 //    }
 
 }
+
 
 
