@@ -6,6 +6,8 @@ import java.util.Map;
 public class CheckoutSolution {
     public Integer checkout(String skus) {
 
+        Map<Character, Integer> priceBySku = new HashMap<>();
+        int totalPrice = 0;
         if (skuIsValid(skus)) {
             var acount = itemsCount(skus, 'A');
             var bcount = itemsCount(skus, 'B');
@@ -51,16 +53,15 @@ public class CheckoutSolution {
         return skus != null && skus.matches("^[A-Z]*$");
     }
 
-    private Map<Character, Integer> itemsCount(String skus, char i) {
+    private Map<Character, Integer> itemsCount(String skus) {
         Map<Character, Integer> itemsCountMap = new HashMap<>();
-        skus.chars().forEach(
-                ch -> itemsCountMap.put((char) ch, (int) skus.chars().filter(a -> a == i).count()));
-
+        skus.chars().forEach(ch -> itemsCountMap.merge((char) ch, 1, Integer::sum));
         return itemsCountMap;
     }
 
-   // private Map<Character, Item> todo come back to this
-
-    private record Item(char sku, int price) {
+    private int priceForItemsWithoutOffers(Map<Character, Integer> pricePerSku, Map<Character, Integer> itemsCount) {
+        itemsCount.forEach();
     }
+
 }
+
