@@ -45,7 +45,7 @@ public class CheckoutSolution {
     }
 
     private boolean skusAccepted(String skus) {
-        return skus != null && skus.matches("[A-Z]+");
+        return skus != null && skus.matches("^[A-Z]*$");
     }
 
     private int getItemCount(String skus, char i) {
@@ -55,3 +55,4 @@ public class CheckoutSolution {
     private record Item(char sku, int price) {
     }
 }
+

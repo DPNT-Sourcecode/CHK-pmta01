@@ -23,7 +23,6 @@ public class CheckoutTest {
         assertEquals(55, (int) checkoutSolution.checkout(sku4));
         assertEquals(160, (int) checkoutSolution.checkout(sku5));
         assertEquals(0, (int) checkoutSolution.checkout(sku6));
-
     }
 
     @Test
@@ -81,4 +80,5 @@ public class CheckoutTest {
         assertEquals(-1, checkoutSolution.checkout(nonValidSku3));
     }
 }
+
 
