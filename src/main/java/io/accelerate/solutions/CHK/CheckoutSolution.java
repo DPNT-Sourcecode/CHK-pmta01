@@ -22,7 +22,7 @@ public class CheckoutSolution {
             while (acount.get('A') >= 5) {
                 bonusAprice += (acount.get('A') / 5) * 200;
                 if (acount.get('A') % 5 == 0) {
-                    acount.get('A') = 0;
+                    acount.put('A', 0);
                     break;
                 }
                 acount -= 5;
@@ -59,8 +59,11 @@ public class CheckoutSolution {
         return itemsCountMap;
     }
 
+   // private Map<Character, Item> todo come back to this
+
     private record Item(char sku, int price) {
     }
 }
+
 
 
