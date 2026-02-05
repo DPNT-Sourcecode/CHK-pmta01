@@ -1,8 +1,10 @@
 package io.accelerate.solutions;
 
 import org.junit.jupiter.api.Test;
+import io.accelerate.solutions.CHK;
 
 public class CHK {
+    private final static io.accelerate.solutions.CHK.CheckoutSolution che
 
     @Test
     void calculateTotalProductsPrice() {
@@ -14,4 +16,3 @@ public class CHK {
     }
 
 }
-
