@@ -42,12 +42,14 @@ public class CheckoutTest {
         assertEquals(330, (int) checkoutSolution.checkout(sku13));
         assertEquals(250, (int) checkoutSolution.checkout(sku14));
         assertEquals(400, (int) checkoutSolution.checkout(sku15));
-
     }
 
     @Test
+    void
+
+    @Test
     void skusOnlyIncludeAcceptedProductIdentifiers() {
-        final String nonValidSku1 = "ADECBA";
+        final String nonValidSku1 = "ADXCBA";
         final String nonValidSku3 = null;
         final String nonValidSku4 = "RT";
 
@@ -56,4 +58,5 @@ public class CheckoutTest {
         assertEquals(-1, checkoutSolution.checkout(nonValidSku4));
     }
 }
+
 
