@@ -32,9 +32,12 @@ public class CheckoutSolution {
             }
             var bprice = ((bcount / 2) * 45) + ((bcount % 2) * 30);
 
-            if(fcount > 2) {
-
+            var bonusFprice = 0;
+            if (fcount >= 3) {
+                bonusFprice += 2 * 10;
+                fcount -= 3;
             }
+            var fprice = bonusFprice + (fcount * 10);
 
             return cprice + dprice + aprice + bprice + eprice;
         }
@@ -56,3 +59,4 @@ public class CheckoutSolution {
 //        private int price;
 //    }
 }
+

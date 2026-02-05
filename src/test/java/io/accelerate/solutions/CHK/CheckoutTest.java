@@ -27,7 +27,7 @@ public class CheckoutTest {
     }
 
     @Test
-    void itemEIsAddedAvailableItemsAndItsOffersAreAppliedCorrectly() {
+    void itemEIsAvailableAndItsOffersAreAppliedCorrectly() {
         final String sku7 = "EE";
         final String sku8 = "EEBB";
         final String sku9 = "AEB";
@@ -42,16 +42,32 @@ public class CheckoutTest {
     }
 
     @Test
-    void itemsAnewSpecialOfferAppliesCorrectly() {
-        final String sku12 = "AAAAA";
-        final String sku13 = "AAAAAAAA";
-        final String sku14 = "AAAAAA";
-        final String sku15 = "AAAAAAAAAA";
+    void itemAnewSpecialOfferAppliesCorrectly() {
+        final String sku1 = "AAAAA";
+        final String sku2 = "AAAAAAAA";
+        final String sku3 = "AAAAAA";
+        final String sku4 = "AAAAAAAAAA";
 
-        assertEquals(200, (int) checkoutSolution.checkout(sku12));
-        assertEquals(330, (int) checkoutSolution.checkout(sku13));
-        assertEquals(250, (int) checkoutSolution.checkout(sku14));
-        assertEquals(400, (int) checkoutSolution.checkout(sku15));
+        assertEquals(200, (int) checkoutSolution.checkout(sku1));
+        assertEquals(330, (int) checkoutSolution.checkout(sku2));
+        assertEquals(250, (int) checkoutSolution.checkout(sku3));
+        assertEquals(400, (int) checkoutSolution.checkout(sku4));
+    }
+
+    @Test
+    void itemFIsAvailableAndItsOffersAreAppliedCorrectly() {
+
+        final String sku1 = "FF";
+        final String sku2 = "FFF";
+        final String sku3 = "FFFFFF";
+        final String sku4 = "FFFF";
+        final String sku5 = "FEEBA";
+
+        assertEquals(20, (int) checkoutSolution.checkout(sku1));
+        assertEquals(20, (int) checkoutSolution.checkout(sku2));
+        assertEquals(40, (int) checkoutSolution.checkout(sku3));
+        assertEquals(40, (int) checkoutSolution.checkout(sku4));
+        assertEquals(60, (int) checkoutSolution.checkout(sku5));
     }
 
     @Test
@@ -65,3 +81,4 @@ public class CheckoutTest {
         assertEquals(-1, checkoutSolution.checkout(nonValidSku4));
     }
 }
+
