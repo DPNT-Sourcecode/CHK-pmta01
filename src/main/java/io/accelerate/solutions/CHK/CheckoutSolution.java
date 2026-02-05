@@ -15,7 +15,7 @@ public class CheckoutSolution {
             var dprice = dcount * 15;
             var eprice = ecount * 40;
             var aprice = ((acount / 3) * 130) + ((acount % 3) * 50);
-            while (ecount >= 2 && bcount > 1) {
+            while (ecount >= 2 && bcount > 0) {
                 bcount -= 1;
                 ecount -= 2;
             }
@@ -25,5 +25,6 @@ public class CheckoutSolution {
         return -1;
     }
 }
+
 
 
