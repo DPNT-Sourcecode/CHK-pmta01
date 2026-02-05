@@ -72,7 +72,7 @@ public class CheckoutTest {
 
     @Test
     void skusOnlyIncludeAcceptedProductIdentifiers() {
-        final String nonValidSku1 = "ADXCBA";
+        final String nonValidSku1 = "AD-";
         final String nonValidSku3 = null;
         final String nonValidSku4 = "RT";
 
@@ -81,6 +81,7 @@ public class CheckoutTest {
         assertEquals(-1, checkoutSolution.checkout(nonValidSku4));
     }
 }
+
 
 
 
