@@ -9,13 +9,13 @@ public class CheckoutSolution {
             var bcount = (int) skus.chars().filter(b -> b == 'B').count();
             var ccount = (int) skus.chars().filter(c -> c == 'C').count();
             var dcount = (int) skus.chars().filter(d -> d == 'D').count();
-            var ecount = (int) skus.chars().filter(d -> d == 'E').count();
+            var ecount = (int) skus.chars().filter(e -> e == 'E').count();
 
             var cprice = ccount * 20;
             var dprice = dcount * 15;
             var eprice = ecount * 40;
             var aprice = ((acount / 3) * 130) + ((acount % 3) * 50);
-            while (ecount >= 2) {
+            while (ecount >= 2 && bcount > 1) {
                 bcount -= 1;
                 ecount -= 2;
             }
@@ -25,4 +25,5 @@ public class CheckoutSolution {
         return -1;
     }
 }
+
 
