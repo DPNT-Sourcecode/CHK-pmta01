@@ -6,5 +6,3 @@ public class CheckoutSolution {
         skus.chars().allMatch()
     }
 }
-
-
