@@ -18,6 +18,10 @@ public class CheckoutSolution {
             var bonusAprice = 0;
             while (acount >= 5) {
                 bonusAprice += (acount / 5) * 200;
+                if (acount % 5 == 0) {
+                    acount = 0;
+                    break;
+                }
                 acount -= 5;
             }
             var aprice = ((acount / 3) * 130) + ((acount % 3) * 50) + bonusAprice;
@@ -32,3 +36,4 @@ public class CheckoutSolution {
         return -1;
     }
 }
+
