@@ -1,11 +1,11 @@
 package io.accelerate.solutions.CHK;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CheckoutSolution {
-
-
+    private final List<Character> itemsWithBatchDiscounts = List.of('A', 'B', 'F', 'H', 'K', 'P', 'Q', 'U', 'V');
     private static final Map<Character, Integer> PRICE_BY_SKU = new HashMap<>();
 
     static {
@@ -39,9 +39,8 @@ public class CheckoutSolution {
 
     public Integer checkout(String skus) {
         if (skuIsValid(skus)) {
-            var cprice = itemsWithoutOfferTotalPrice(itemsCount(skus), 'C');
-            var dprice = itemsWithoutOfferTotalPrice(itemsCount(skus), 'D');
-            var eprice = itemsWithoutOfferTotalPrice(itemsCount(skus), 'E');
+
+            var itemsWithoutOfferPrice = itemsWithoutOfferTotalPrice(itemsCount(skus));
 
             var bonusAprice = 0;
             while (acount.get('A') >= 5) {
@@ -67,7 +66,7 @@ public class CheckoutSolution {
             }
             var fprice = bonusFprice + (fcount * 10);
 
-            return cprice + dprice + aprice + bprice + eprice + fprice;
+            return itemsWithoutOfferPrice;
         }
         return -1;
     }
@@ -82,14 +81,37 @@ public class CheckoutSolution {
         return itemsCountMap;
     }
 
-    private int itemsWithoutOfferTotalPrice(Map<Character, Integer> itemsCount, char itemSku) {
-        return itemsCount.get(itemSku) * PRICE_BY_SKU.get(itemSku);
+    private int itemsWithoutOfferTotalPrice(Map<Character, Integer> itemsCount) {
+        var totalPrice = 0;
+        var itemsToConsider = PRICE_BY_SKU.keySet().stream().
+                filter(ch -> !itemsWithBatchDiscounts.contains(ch)).toList();
+
+        for (char ch : itemsToConsider) {
+            var itemCount = itemsCount.get(ch);
+            var itemPrice = PRICE_BY_SKU.get(ch);
+            totalPrice += itemPrice * itemCount;
+        }
+        return totalPrice;
     }
 
-    private int sameItemDiscountsOffer() {
+    private int sameItemDiscountsOffer(char sku, int itemCount) {
+        if(itemsWithBatchDiscounts.contains(sku)) {
+            switch (sku) {
+                case '':
+                case '':
+                case '':
+                case '':
+                case '':
+                case '':
+                case '':
+                case '':
+                case '':
+            }
+        } else return 0;
     }
 
-    private int crossItemDiscountOffers() {
-    }
+//    private int crossItemDiscountOffers() {
+//    }
 
 }
+
