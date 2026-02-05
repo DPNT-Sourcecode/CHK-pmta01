@@ -1,11 +1,7 @@
 package io.accelerate.solutions.CHK;
 
 import org.junit.jupiter.api.Test;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CheckoutTest {
 
@@ -30,7 +26,7 @@ public class CheckoutTest {
     @Test
     void skusOnlyIncludeAcceptedProductIdentifiers() {
         final String nonValidSku1 = "ADFCBA";
-        final String nonValidSku2 = "";
+        final String nonValidSku2 = "  ";
         final String nonValidSku3 = null;
         final String nonValidSku4 = "RT";
 
@@ -40,3 +36,4 @@ public class CheckoutTest {
         assertEquals(-1, checkoutSolution.checkout(nonValidSku4));
     }
 }
+
