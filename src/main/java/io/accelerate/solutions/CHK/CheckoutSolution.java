@@ -59,9 +59,12 @@ public class CheckoutSolution {
         return itemsCountMap;
     }
 
-    private int priceForItemsWithoutOffers(Map<Character, Integer> pricePerSku, Map<Character, Integer> itemsCount) {
+    private int noOfferPrice(Map<Character, Integer> pricePerSku, Map<Character, Integer> itemsCount) {
         itemsCount.forEach();
     }
 
-}
+    private int sameItemDiscountsOffer() {}
 
+    private int crossItemDiscountOffers() {}
+
+}
