@@ -4,21 +4,44 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CheckoutSolution {
+
+
+    private static final Map<Character, Integer> PRICE_BY_SKU = new HashMap<>();
+
+    static {
+        PRICE_BY_SKU.put('A', 50);
+        PRICE_BY_SKU.put('B', 30);
+        PRICE_BY_SKU.put('C', 20);
+        PRICE_BY_SKU.put('D', 15);
+        PRICE_BY_SKU.put('E', 40);
+        PRICE_BY_SKU.put('F', 10);
+        PRICE_BY_SKU.put('G', 20);
+        PRICE_BY_SKU.put('H', 10);
+        PRICE_BY_SKU.put('I', 35);
+        PRICE_BY_SKU.put('J', 60);
+        PRICE_BY_SKU.put('K', 80);
+        PRICE_BY_SKU.put('L', 90);
+        PRICE_BY_SKU.put('M', 15);
+        PRICE_BY_SKU.put('N', 40);
+        PRICE_BY_SKU.put('O', 10);
+        PRICE_BY_SKU.put('P', 50);
+        PRICE_BY_SKU.put('Q', 30);
+        PRICE_BY_SKU.put('R', 50);
+        PRICE_BY_SKU.put('S', 30);
+        PRICE_BY_SKU.put('T', 20);
+        PRICE_BY_SKU.put('U', 40);
+        PRICE_BY_SKU.put('V', 50);
+        PRICE_BY_SKU.put('W', 20);
+        PRICE_BY_SKU.put('X', 90);
+        PRICE_BY_SKU.put('Y', 10);
+        PRICE_BY_SKU.put('Z', 50);
+    }
+
     public Integer checkout(String skus) {
-
-        Map<Character, Integer> priceBySku = new HashMap<>();
-        int totalPrice = 0;
         if (skuIsValid(skus)) {
-            var acount = itemsCount(skus, 'A');
-            var bcount = itemsCount(skus, 'B');
-            var ccount = itemsCount(skus, 'C');
-            var dcount = itemsCount(skus, 'D');
-            var ecount = itemsCount(skus, 'E');
-            var fcount = itemsCount(skus, 'F');
-
-            var cprice = ccount.get('C') * 20;
-            var dprice = dcount.get('D') * 15;
-            var eprice = ecount.get('E') * 40;
+            var cprice = itemsWithoutOfferTotalPrice(itemsCount(skus), 'C');
+            var dprice = itemsWithoutOfferTotalPrice(itemsCount(skus), 'D');
+            var eprice = itemsWithoutOfferTotalPrice(itemsCount(skus), 'E');
 
             var bonusAprice = 0;
             while (acount.get('A') >= 5) {
@@ -50,7 +73,7 @@ public class CheckoutSolution {
     }
 
     private boolean skuIsValid(String skus) {
-        return skus != null && skus.matches("^[A-Z]*$");
+        return skus != null && skus.matches("^[A-Z]*$"); //todo refactor to validate against PRICE_BY_SKU map
     }
 
     private Map<Character, Integer> itemsCount(String skus) {
@@ -59,12 +82,15 @@ public class CheckoutSolution {
         return itemsCountMap;
     }
 
-    private int noOfferPrice(Map<Character, Integer> pricePerSku, Map<Character, Integer> itemsCount) {
-        itemsCount.forEach();
+    private int itemsWithoutOfferTotalPrice(Map<Character, Integer> itemsCount, char itemSku) {
+        return itemsCount.get(itemSku) * PRICE_BY_SKU.get(itemSku);
     }
 
-    private int sameItemDiscountsOffer() {}
+    private int sameItemDiscountsOffer() {
+    }
 
-    private int crossItemDiscountOffers() {}
+    private int crossItemDiscountOffers() {
+    }
 
 }
+
