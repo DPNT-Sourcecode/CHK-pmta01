@@ -9,23 +9,13 @@ public class CheckoutTest {
     private final CheckoutSolution checkoutSolution = new CheckoutSolution();
 
     @Test
-    void calculateTotalPriceOfProducts() {
-
+    void itemsTotalPriceIsCalculatedCorrectly() {
         final String sku1 = "ABCD";
         final String sku2 = "AAACD";
         final String sku3 = "ABBC";
         final String sku4 = "CCD";
         final String sku5 = "DDAAB";
         final String sku6 = "";
-        final String sku7 = "EE";
-        final String sku8 = "EEBB";
-        final String sku9 = "AEB";
-        final String sku10 = "CDEEB";
-        final String sku11 = "CBABBDEEEE";
-        final String sku12 = "AAAAA";
-        final String sku13 = "AAAAAAAA";
-        final String sku14 = "AAAAAA";
-        final String sku15 = "AAAAAAAAAA";
 
         assertEquals(115, (int) checkoutSolution.checkout(sku1));
         assertEquals(165, (int) checkoutSolution.checkout(sku2));
@@ -33,19 +23,36 @@ public class CheckoutTest {
         assertEquals(55, (int) checkoutSolution.checkout(sku4));
         assertEquals(160, (int) checkoutSolution.checkout(sku5));
         assertEquals(0, (int) checkoutSolution.checkout(sku6));
+
+    }
+
+    @Test
+    void itemEIsAddedAvailableItemsAndItsOffersAreAppliedCorrectly() {
+        final String sku7 = "EE";
+        final String sku8 = "EEBB";
+        final String sku9 = "AEB";
+        final String sku10 = "CDEEB";
+        final String sku11 = "CBABBDEEEE";
+
         assertEquals(80, (int) checkoutSolution.checkout(sku7));
         assertEquals(110, (int) checkoutSolution.checkout(sku8));
         assertEquals(120, (int) checkoutSolution.checkout(sku9));
         assertEquals(115, (int) checkoutSolution.checkout(sku10));
         assertEquals(275, (int) checkoutSolution.checkout(sku11));
+    }
+
+    @Test
+    void itemsAnewSpecialOfferAppliesCorrectly() {
+        final String sku12 = "AAAAA";
+        final String sku13 = "AAAAAAAA";
+        final String sku14 = "AAAAAA";
+        final String sku15 = "AAAAAAAAAA";
+
         assertEquals(200, (int) checkoutSolution.checkout(sku12));
         assertEquals(330, (int) checkoutSolution.checkout(sku13));
         assertEquals(250, (int) checkoutSolution.checkout(sku14));
         assertEquals(400, (int) checkoutSolution.checkout(sku15));
     }
-
-    @Test
-    void
 
     @Test
     void skusOnlyIncludeAcceptedProductIdentifiers() {
@@ -58,5 +65,6 @@ public class CheckoutTest {
         assertEquals(-1, checkoutSolution.checkout(nonValidSku4));
     }
 }
+
 
 
