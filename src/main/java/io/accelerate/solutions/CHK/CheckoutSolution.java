@@ -124,7 +124,7 @@ public class CheckoutSolution {
         return totalPrice;
     }
 
-    private int crossItemFreebieOfferPrice(char triggerSku, char affectedSku, int triggerCount,
+    private int crossItemFreebie(char triggerSku, char affectedSku, int triggerCount,
                                            int affectedCount, String skus) {
 
         var affectedSkuQuantity = getItemsCount(skus).getOrDefault(affectedSku, 0); // initial count
@@ -191,3 +191,4 @@ public class CheckoutSolution {
     }
 
 }
+
