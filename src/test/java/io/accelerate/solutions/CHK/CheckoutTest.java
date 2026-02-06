@@ -83,6 +83,14 @@ public class CheckoutTest {
     }
 
     @Test
+    void freebiePricingIsCalculatedCorrectly() {
+        final String sku1 = "NNNM";
+        final String sku2 = "";
+        final String sku3 = "PPPP";
+    }
+
+
+    @Test
     void skusOnlyIncludeAcceptedProductIdentifiers() {
         final String nonValidSku1 = "AD-";
         final String nonValidSku2 = null;
@@ -93,4 +101,5 @@ public class CheckoutTest {
         assertEquals(-1, checkoutSolution.checkout(nonValidSku3));
     }
 }
+
 

@@ -45,7 +45,7 @@ public class CheckoutSolution {
 
             applyCrossItemFreebie('E', 2, 'B', 1, payable);
             applyCrossItemFreebie('F', 2, 'F', 1, payable);
-            applyCrossItemFreebie('M', 3, 'N', 1, payable);
+            applyCrossItemFreebie('N', 3, 'M', 1, payable);
             applyCrossItemFreebie('R', 3, 'Q', 1, payable);
             applyCrossItemFreebie('U', 3, 'U', 1, payable);
 
@@ -166,4 +166,5 @@ public class CheckoutSolution {
     }
 
 }
+
 
