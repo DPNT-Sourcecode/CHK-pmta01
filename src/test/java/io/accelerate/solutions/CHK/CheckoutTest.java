@@ -85,8 +85,12 @@ public class CheckoutTest {
     @Test
     void freebiePricingIsCalculatedCorrectly() {
         final String sku1 = "NNNM";
-        final String sku2 = "";
-        final String sku3 = "PPPP";
+        final String sku2 = "NNNNM";
+        final String sku3 = "NNNNNNM";
+
+        assertEquals(120, (int) checkoutSolution.checkout(sku1));
+        assertEquals(160, (int) checkoutSolution.checkout(sku2));
+        assertEquals(240, (int) checkoutSolution.checkout(sku3));
     }
 
 
@@ -101,5 +105,6 @@ public class CheckoutTest {
         assertEquals(-1, checkoutSolution.checkout(nonValidSku3));
     }
 }
+
 
 
