@@ -40,6 +40,17 @@ public class CheckoutSolution {
     public Integer checkout(String skus) {
         if (skuIsValid(skus)) {
 
+            Map<Character, Integer> counts = getItemsCount(skus);
+            Map<Character, Integer> payable = Map.copyOf(counts);
+
+            applyCrossItemFreebie('E', 2, 'B', 1, payable);
+            applyCrossItemFreebie('F', 2, 'F', 1, payable);
+            applyCrossItemFreebie('M', 3, 'N', 1, payable);
+            applyCrossItemFreebie('R', 3, 'Q', 1, payable);
+            applyCrossItemFreebie('U', 3, 'U', 1, payable);
+
+            var totalPrice = 0;
+
             var a = sameItemDiscountsOfferWithTwoOfferType(skus, 'A');
             var h = sameItemDiscountsOfferWithTwoOfferType(skus, 'H');
             var vv = sameItemDiscountsOfferWithTwoOfferType(skus, 'V');
@@ -49,21 +60,7 @@ public class CheckoutSolution {
             var z = sameItemDiscountsOfferWithOneOfferType(skus, 'Q');
             var v = sameItemDiscountsOfferWithOneOfferType(skus, 'P');
 
-            var itemsWithoutOfferPrice = itemsWithoutOfferTotalPrice(getItemsCount(skus));
-
-//            while (ecount >= 2 && bcount > 0) {
-//                bcount -= 1;
-//                ecount -= 2;
-//            }
-//            // var bprice = ((bcount / 2) * 45) + ((bcount % 2) * 30);
-//
-//
-//            var bonusFprice = 0;
-//            while (fcount >= 3) {
-//                bonusFprice += 2 * 10;
-//                fcount -= 3;
-//            }
-//            var fprice = bonusFprice + (fcount * 10);
+            var itemsWithoutOfferPrice = itemsWithoutOfferTotalPrice(counts);
 
             return itemsWithoutOfferPrice + x + y + z + v + a + h + vv;
         }
@@ -124,16 +121,16 @@ public class CheckoutSolution {
         return totalPrice;
     }
 
-    private int crossItemFreebie(char triggerSku, char affectedSku, int triggerCount,
-                                           int affectedCount, String skus) {
+    private void applyCrossItemFreebie(char triggerSku, int triggerCount,
+                                       char affectedSku, int affectedCount, Map<Character, Integer> payable) {
 
-        var affectedSkuQuantity = getItemsCount(skus).getOrDefault(affectedSku, 0); // initial count
-        var triggerSkuQuantity = getItemsCount(skus).getOrDefault(triggerSku, 0);
-        while (triggerSkuQuantity >= triggerCount && affectedSkuQuantity > 0) {
-            affectedSkuQuantity -= affectedCount;
-            triggerSkuQuantity -= triggerCount;
-        }
-        return affectedSkuQuantity;
+        var triggerQuantity = payable.getOrDefault(triggerSku, 0);
+        var affectedQuantity = payable.getOrDefault(affectedSku, 0);
+
+        var triggerRepetitionTime = triggerQuantity / triggerCount;
+        var freebies = triggerRepetitionTime * affectedCount;
+
+        payable.put(affectedSku, Math.max(0, affectedQuantity - freebies));
     }
 
     private int getSingleItemCount(String skus, char sku) {
@@ -186,9 +183,4 @@ public class CheckoutSolution {
         } else return 0;
     }
 
-    private void crossItemOffer(String skus, char sku) {
-        Map<Character, Integer> affectedItems =
-    }
-
 }
-
