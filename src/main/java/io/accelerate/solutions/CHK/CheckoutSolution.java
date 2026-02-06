@@ -74,7 +74,7 @@ public class CheckoutSolution {
 
     private int oneTypeBatchDiscountPrice(int quantity, int discountedPrice, int discountedBatchSize, int originalPrice) {
         var totalPrice = 0;
-        return totalPrice + (((quantity / discountedBatchSize) * discountedPrice) + ((quantity % 2) * originalPrice));
+        return totalPrice + (((quantity / discountedBatchSize) * discountedPrice) + ((quantity % discountedBatchSize) * originalPrice));
     }
 
     private int twoTypeBatchDiscountPrice(int quantity, int batchSize1, int discountedPrice1,
@@ -166,3 +166,4 @@ public class CheckoutSolution {
     }
 
 }
+

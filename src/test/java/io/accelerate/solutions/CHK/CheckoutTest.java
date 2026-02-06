@@ -70,6 +70,19 @@ public class CheckoutTest {
     }
 
     @Test
+    void pricingForSingleOfferItemsIsCorrect() {
+        final String sku1 = "PP";
+        final String sku2 = "PPP";
+        final String sku3 = "PPPP";
+        final String sku4 = "PPPPP";
+
+        assertEquals(100, (int) checkoutSolution.checkout(sku1));
+        assertEquals(150, (int) checkoutSolution.checkout(sku2));
+        assertEquals(200, (int) checkoutSolution.checkout(sku3));
+        assertEquals(200, (int) checkoutSolution.checkout(sku4));
+    }
+
+    @Test
     void skusOnlyIncludeAcceptedProductIdentifiers() {
         final String nonValidSku1 = "AD-";
         final String nonValidSku2 = null;
@@ -80,3 +93,4 @@ public class CheckoutTest {
         assertEquals(-1, checkoutSolution.checkout(nonValidSku3));
     }
 }
+
