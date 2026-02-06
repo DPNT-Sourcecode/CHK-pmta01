@@ -40,15 +40,16 @@ public class CheckoutSolution {
     public Integer checkout(String skus) {
         if (skuIsValid(skus)) {
 
-            var itemsWithoutOfferPrice = itemsWithoutOfferTotalPrice(getItemsCount(skus));
+            var a = sameItemDiscountsOfferWithTwoOfferType(skus, 'A');
+            var h = sameItemDiscountsOfferWithTwoOfferType(skus, 'H');
+            var vv = sameItemDiscountsOfferWithTwoOfferType(skus, 'V');
 
             var x = sameItemDiscountsOfferWithOneOfferType(skus, 'B');
             var y = sameItemDiscountsOfferWithOneOfferType(skus, 'K');
             var z = sameItemDiscountsOfferWithOneOfferType(skus, 'Q');
             var v = sameItemDiscountsOfferWithOneOfferType(skus, 'P');
 
-            var a = crossItemDiscountOffers(skus, 'A');
-            var h = crossItemDiscountOffers(skus, 'H');
+            var itemsWithoutOfferPrice = itemsWithoutOfferTotalPrice(getItemsCount(skus));
 
 //            while (ecount >= 2 && bcount > 0) {
 //                bcount -= 1;
@@ -64,7 +65,7 @@ public class CheckoutSolution {
 //            }
 //            var fprice = bonusFprice + (fcount * 10);
 
-            return itemsWithoutOfferPrice + x + y + z + v + a + h;
+            return itemsWithoutOfferPrice + x + y + z + v + a + h + vv;
         }
         return -1;
     }
@@ -123,7 +124,17 @@ public class CheckoutSolution {
         return totalPrice;
     }
 
-    private int freeb
+    private int crossItemFreebieOfferPrice(char triggerSku, char affectedSku, int triggerCount,
+                                           int affectedCount, String skus) {
+
+        var affectedSkuQuantity = getItemsCount(skus).getOrDefault(affectedSku, 0); // initial count
+        var triggerSkuQuantity = getItemsCount(skus).getOrDefault(triggerSku, 0);
+        while (triggerSkuQuantity >= triggerCount && affectedSkuQuantity > 0) {
+            affectedSkuQuantity -= affectedCount;
+            triggerSkuQuantity -= triggerCount;
+        }
+        return affectedSkuQuantity;
+    }
 
     private int getSingleItemCount(String skus, char sku) {
         return getItemsCount(skus).getOrDefault(sku, 0); //todo refactor this
@@ -154,7 +165,7 @@ public class CheckoutSolution {
         } else return 0;
     }
 
-    private int crossItemDiscountOffers(String skus, char sku) {
+    private int sameItemDiscountsOfferWithTwoOfferType(String skus, char sku) {
         if (itemsWithBatchDiscounts.contains(sku)) {
             var totalPrice = 0;
             switch (sku) {
@@ -166,10 +177,17 @@ public class CheckoutSolution {
                     var hcount = getSingleItemCount(skus, 'H');
                     totalPrice = twoTypeBatchDiscountPrice(hcount, 5, 45, 10, 80, 10);
                 }
+                case 'V' -> {
+                    var vcount = getSingleItemCount(skus, 'V');
+                    totalPrice = twoTypeBatchDiscountPrice(vcount, 2, 90, 3, 130, 50);
+                }
             }
             return totalPrice;
         } else return 0;
     }
 
-}
+    private void crossItemOffer(String skus, char sku) {
+        Map<Character, Integer> affectedItems =
+    }
 
+}
