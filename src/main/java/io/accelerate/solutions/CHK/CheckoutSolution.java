@@ -107,12 +107,12 @@ public class CheckoutSolution {
                                        char affectedSku, int affectedCount, Map<Character, Integer> payable) {
 
         var triggerQuantity = payable.getOrDefault(triggerSku, 0);
-        var affectedQuantity = payable.getOrDefault(affectedSku, 0);
+        var affectedSkuQuantity = payable.getOrDefault(affectedSku, 0);
 
         var triggerRepetitionTime = triggerQuantity / triggerCount;
         var freebies = triggerRepetitionTime * affectedCount;
 
-        payable.put(affectedSku, Math.max(0, affectedQuantity - freebies));
+        payable.put(affectedSku, Math.max(0, affectedSkuQuantity - freebies));
     }
 
     private int totalPriceForSku(char sku, int quantity) {
@@ -160,5 +160,6 @@ public class CheckoutSolution {
     }
 
 }
+
 
 
