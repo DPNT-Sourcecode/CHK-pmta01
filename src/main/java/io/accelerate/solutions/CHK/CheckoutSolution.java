@@ -63,7 +63,7 @@ public class CheckoutSolution {
     }
 
     private boolean skuIsValid(String skus) {
-        return skus != null && skus.matches("^[A-Z]*$"); //todo refactor to validate against PRICE_BY_SKU map
+        return skus != null && skus.matches("^[A-Z]*$");
     }
 
     private Map<Character, Integer> getItemsCount(String skus) {
@@ -160,4 +160,5 @@ public class CheckoutSolution {
     }
 
 }
+
 
