@@ -85,7 +85,7 @@ public class CheckoutSolution {
                 filter(ch -> !itemsWithBatchDiscounts.contains(ch)).toList();
 
         for (char ch : itemsToConsider) {
-            var itemCount = itemsCount.get(ch);
+            var itemCount = itemsCount.getOrDefault(ch, 0);
             var itemPrice = PRICE_BY_SKU.get(ch);
             totalPrice += itemPrice * itemCount;
         }
@@ -122,6 +122,8 @@ public class CheckoutSolution {
         totalPrice += allRemainingItems * originalPrice;
         return totalPrice;
     }
+
+    private int freeb
 
     private int getSingleItemCount(String skus, char sku) {
         return getItemsCount(skus).getOrDefault(sku, 0); //todo refactor this
@@ -170,3 +172,4 @@ public class CheckoutSolution {
     }
 
 }
+
