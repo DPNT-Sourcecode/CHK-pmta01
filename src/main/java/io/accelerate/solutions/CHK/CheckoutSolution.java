@@ -108,15 +108,17 @@ public class CheckoutSolution {
                                           int batchSize2, int discountedPrice2, int originalPrice) {
         var totalPrice = 0;
 
-        while (acount.get('A') >= 5) {
-            bonusAprice += (acount.get('A') / 5) * 200;
-            if (acount.get('A') % 5 == 0) {
-                acount.put('A', 0);
-                break;
-            }
-            acount -= 5;
-        }
-        var aprice = ((acount / 3) * 130) + ((acount % 3) * 50) + bonusAprice;
+        
+
+//        while (acount.get('A') >= 5) {
+//            bonusAprice += (acount.get('A') / 5) * 200;
+//            if (acount.get('A') % 5 == 0) {
+//                acount.put('A', 0);
+//                break;
+//            }
+//            acount -= 5;
+//        }
+//        var aprice = ((acount / 3) * 130) + ((acount % 3) * 50) + bonusAprice;
 
     }
 
@@ -128,20 +130,6 @@ public class CheckoutSolution {
         if (itemsWithBatchDiscounts.contains(sku)) {
             int totalPrice = 0;
             switch (sku) {  // todo refactor to use another logic instead of switch case
-//                case 'A': {
-//                    var bonusAprice = 0;
-//                    while (acount.get('A') >= 5) {
-//                        bonusAprice += (acount.get('A') / 5) * 200;
-//                        if (acount.get('A') % 5 == 0) {
-//                            acount.put('A', 0);
-//                            break;
-//                        }
-//                        acount -= 5;
-//                    }
-//                    var aprice = ((acount / 3) * 130) + ((acount % 3) * 50) + bonusAprice;
-//                    break;
-//                }
-
                 case 'B' -> {
                     var bcount = getSingleItemCount(skus, 'B');
                     totalPrice = oneTypeBatchDiscountPrice(bcount, 45, 2, PRICE_BY_SKU.get('B'));
@@ -158,11 +146,6 @@ public class CheckoutSolution {
                     var qcount = getSingleItemCount(skus, 'Q');
                     totalPrice = oneTypeBatchDiscountPrice(qcount, 80, 3, PRICE_BY_SKU.get('Q'));
                 }
-
-//                case 'F':
-//                case 'H':
-//                case 'U':
-//                case 'V':
             }
             return totalPrice;
         } else return 0;
@@ -182,3 +165,4 @@ public class CheckoutSolution {
     }
 
 }
+
