@@ -113,6 +113,12 @@ public class CheckoutSolution {
         var freebies = triggerRepetitionTime * affectedCount;
 
         payable.put(affectedSku, Math.max(0, affectedSkuQuantity - freebies));
+
+        if (triggerSku == affectedSku) { //get 2f, third f will be free
+            var newCount = triggerCount + affectedCount;
+            var sameItemFreebie = triggerQuantity / newCount;
+            payable.put(affectedSku, triggerQuantity - sameItemFreebie);
+        }
     }
 
     private int totalPriceForSku(char sku, int quantity) {
@@ -160,6 +166,7 @@ public class CheckoutSolution {
     }
 
 }
+
 
 
 
