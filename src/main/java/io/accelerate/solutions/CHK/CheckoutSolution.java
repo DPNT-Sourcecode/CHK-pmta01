@@ -39,9 +39,8 @@ public class CheckoutSolution {
 
     public Integer checkout(String skus) {
         if (skuIsValid(skus)) {
-
             Map<Character, Integer> counts = getItemsCount(skus);
-            Map<Character, Integer> payable = Map.copyOf(counts);
+            Map<Character, Integer> payable = new HashMap<>(counts);
 
             applyCrossItemFreebie('E', 2, 'B', 1, payable);
             applyCrossItemFreebie('F', 2, 'F', 1, payable);
@@ -134,13 +133,13 @@ public class CheckoutSolution {
     }
 
     private int getSingleItemCount(String skus, char sku) {
-        return getItemsCount(skus).getOrDefault(sku, 0); //todo refactor this
+        return getItemsCount(skus).getOrDefault(sku, 0);
     }
 
     private int sameItemDiscountsOfferWithOneOfferType(String skus, char sku) {
         if (itemsWithBatchDiscounts.contains(sku)) {
             int totalPrice = 0;
-            switch (sku) {  // todo refactor to use another logic instead of switch case
+            switch (sku) {
                 case 'B' -> {
                     var bcount = getSingleItemCount(skus, 'B');
                     totalPrice = oneTypeBatchDiscountPrice(bcount, 45, 2, PRICE_BY_SKU.get('B'));
@@ -184,3 +183,4 @@ public class CheckoutSolution {
     }
 
 }
+
