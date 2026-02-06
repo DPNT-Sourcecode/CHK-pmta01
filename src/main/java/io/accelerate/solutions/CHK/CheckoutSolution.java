@@ -3,6 +3,7 @@ package io.accelerate.solutions.CHK;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class CheckoutSolution {
     private final List<Character> itemsWithBatchDiscounts = List.of('A', 'B', 'F', 'H', 'K', 'P', 'Q', 'U', 'V');
@@ -50,18 +51,24 @@ public class CheckoutSolution {
 
             var totalPrice = 0;
 
-            var a = sameItemDiscountsOfferWithTwoOfferType(skus, 'A');
-            var h = sameItemDiscountsOfferWithTwoOfferType(skus, 'H');
-            var vv = sameItemDiscountsOfferWithTwoOfferType(skus, 'V');
+            for (var entry : payable.entrySet()) {
+                var sku = entry.getKey();
+                var quantity = entry.getValue();
+                totalPrice += totalPriceForSku(sku, quantity);
+            }
 
-            var x = sameItemDiscountsOfferWithOneOfferType(skus, 'B');
-            var y = sameItemDiscountsOfferWithOneOfferType(skus, 'K');
-            var z = sameItemDiscountsOfferWithOneOfferType(skus, 'Q');
-            var v = sameItemDiscountsOfferWithOneOfferType(skus, 'P');
+//            var a = sameItemDiscountsOfferWithTwoOfferType(skus, 'A');
+//            var h = sameItemDiscountsOfferWithTwoOfferType(skus, 'H');
+//            var vv = sameItemDiscountsOfferWithTwoOfferType(skus, 'V');
+//
+//            var x = sameItemDiscountsOfferWithOneOfferType(skus, 'B');
+//            var y = sameItemDiscountsOfferWithOneOfferType(skus, 'K');
+//            var z = sameItemDiscountsOfferWithOneOfferType(skus, 'Q');
+//            var v = sameItemDiscountsOfferWithOneOfferType(skus, 'P');
+//
+//            var itemsWithoutOfferPrice = itemsWithoutOfferTotalPrice(counts);
 
-            var itemsWithoutOfferPrice = itemsWithoutOfferTotalPrice(counts);
-
-            return itemsWithoutOfferPrice + x + y + z + v + a + h + vv;
+            return totalPrice;
         }
         return -1;
     }
@@ -74,19 +81,6 @@ public class CheckoutSolution {
         Map<Character, Integer> itemsCountMap = new HashMap<>();
         skus.chars().forEach(ch -> itemsCountMap.merge((char) ch, 1, Integer::sum));
         return itemsCountMap;
-    }
-
-    private int itemsWithoutOfferTotalPrice(Map<Character, Integer> itemsCount) {
-        var totalPrice = 0;
-        var itemsToConsider = PRICE_BY_SKU.keySet().stream().
-                filter(ch -> !itemsWithBatchDiscounts.contains(ch)).toList();
-
-        for (char ch : itemsToConsider) {
-            var itemCount = itemsCount.getOrDefault(ch, 0);
-            var itemPrice = PRICE_BY_SKU.get(ch);
-            totalPrice += itemPrice * itemCount;
-        }
-        return totalPrice;
     }
 
     private int oneTypeBatchDiscountPrice(int quantity, int discountedPrice, int discountedBatchSize, int originalPrice) {
@@ -132,55 +126,57 @@ public class CheckoutSolution {
         payable.put(affectedSku, Math.max(0, affectedQuantity - freebies));
     }
 
-    private int getSingleItemCount(String skus, char sku) {
-        return getItemsCount(skus).getOrDefault(sku, 0);
+    private int totalPriceForSku(char sku, int quantity) {
+
+        Set<Character> TWO_TYPE_OFFER_ITEMS = Set.of('A', 'H', 'V');
+        Set<Character> ONE_TYPE_OFFER_ITEMS = Set.of('B', 'K', 'P', 'Q');
+
+        if(TWO_TYPE_OFFER_ITEMS.contains(sku)) {twoTypeOfferPricing(sku, quantity);}
+        else if (ONE_TYPE_OFFER_ITEMS.contains(sku)) {oneTypeOfferPricing(sku, quantity);}
+        else noOfferPricing()
     }
 
-    private int sameItemDiscountsOfferWithOneOfferType(String skus, char sku) {
+    private int noOfferPricing(Map<Character, Integer> itemsCount) {
+        var totalPrice = 0;
+        var itemsToConsider = PRICE_BY_SKU.keySet().stream().
+                filter(ch -> !itemsWithBatchDiscounts.contains(ch)).toList();
+
+        for (char ch : itemsToConsider) {
+            var itemCount = itemsCount.getOrDefault(ch, 0);
+            var itemPrice = PRICE_BY_SKU.get(ch);
+            totalPrice += itemPrice * itemCount;
+        }
+        return totalPrice;
+    }
+
+    private int oneTypeOfferPricing(char sku, int quantity) {
         if (itemsWithBatchDiscounts.contains(sku)) {
             int totalPrice = 0;
             switch (sku) {
-                case 'B' -> {
-                    var bcount = getSingleItemCount(skus, 'B');
-                    totalPrice = oneTypeBatchDiscountPrice(bcount, 45, 2, PRICE_BY_SKU.get('B'));
-                }
-                case 'K' -> {
-                    var kcount = getSingleItemCount(skus, 'K');
-                    totalPrice = oneTypeBatchDiscountPrice(kcount, 150, 2, PRICE_BY_SKU.get('K'));
-                }
-                case 'P' -> {
-                    var pcount = getSingleItemCount(skus, 'P');
-                    totalPrice = oneTypeBatchDiscountPrice(pcount, 200, 5, PRICE_BY_SKU.get('P'));
-                }
-                case 'Q' -> {
-                    var qcount = getSingleItemCount(skus, 'Q');
-                    totalPrice = oneTypeBatchDiscountPrice(qcount, 80, 3, PRICE_BY_SKU.get('Q'));
-                }
+                case 'B' -> totalPrice = oneTypeBatchDiscountPrice(quantity, 45, 2, PRICE_BY_SKU.get(sku));
+                case 'K' -> totalPrice = oneTypeBatchDiscountPrice(quantity, 150, 2, PRICE_BY_SKU.get(sku));
+                case 'P' -> totalPrice = oneTypeBatchDiscountPrice(quantity, 200, 5, PRICE_BY_SKU.get(sku));
+                case 'Q' -> totalPrice = oneTypeBatchDiscountPrice(quantity, 80, 3, PRICE_BY_SKU.get(sku));
             }
             return totalPrice;
         } else return 0;
     }
 
-    private int sameItemDiscountsOfferWithTwoOfferType(String skus, char sku) {
+    private int twoTypeOfferPricing(char sku, int quantity) {
         if (itemsWithBatchDiscounts.contains(sku)) {
             var totalPrice = 0;
             switch (sku) {
-                case 'A' -> {
-                    var acount = getSingleItemCount(skus, 'A');
-                    totalPrice = twoTypeBatchDiscountPrice(acount, 3, 130, 5, 200, 50);
-                }
-                case 'H' -> {
-                    var hcount = getSingleItemCount(skus, 'H');
-                    totalPrice = twoTypeBatchDiscountPrice(hcount, 5, 45, 10, 80, 10);
-                }
-                case 'V' -> {
-                    var vcount = getSingleItemCount(skus, 'V');
-                    totalPrice = twoTypeBatchDiscountPrice(vcount, 2, 90, 3, 130, 50);
-                }
+                case 'A' -> totalPrice =
+                        twoTypeBatchDiscountPrice(quantity, 3, 130, 5, 200, PRICE_BY_SKU.get(sku));
+                case 'H' -> totalPrice =
+                        twoTypeBatchDiscountPrice(quantity, 5, 45, 10, 80, PRICE_BY_SKU.get(sku));
+                case 'V' -> totalPrice =
+                        twoTypeBatchDiscountPrice(quantity, 2, 90, 3, 130, PRICE_BY_SKU.get(sku));
             }
             return totalPrice;
         } else return 0;
     }
 
 }
+
 
