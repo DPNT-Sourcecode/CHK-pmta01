@@ -62,7 +62,7 @@ public class CheckoutTest {
         final String sku4 = "FFFF";
         final String sku5 = "FEEBA";
 
-      //  assertEquals(20, (int) checkoutSolution.checkout(sku1));
+        assertEquals(20, (int) checkoutSolution.checkout(sku1));
         assertEquals(20, (int) checkoutSolution.checkout(sku2));
         assertEquals(40, (int) checkoutSolution.checkout(sku3));
         assertEquals(30, (int) checkoutSolution.checkout(sku4));
@@ -80,4 +80,5 @@ public class CheckoutTest {
         assertEquals(-1, checkoutSolution.checkout(nonValidSku3));
     }
 }
+
 
