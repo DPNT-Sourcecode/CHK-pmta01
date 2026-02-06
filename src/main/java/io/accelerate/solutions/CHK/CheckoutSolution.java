@@ -42,36 +42,29 @@ public class CheckoutSolution {
 
             var itemsWithoutOfferPrice = itemsWithoutOfferTotalPrice(getItemsCount(skus));
 
-            var bonusAprice = 0;
-            while (acount.get('A') >= 5) {
-                bonusAprice += (acount.get('A') / 5) * 200;
-                if (acount.get('A') % 5 == 0) {
-                    acount.put('A', 0);
-                    break;
-                }
-                acount -= 5;
-            }
-            var aprice = ((acount / 3) * 130) + ((acount % 3) * 50) + bonusAprice;
+            var x = sameItemDiscountsOfferWithOneOfferType(skus, 'B');
+            var y = sameItemDiscountsOfferWithOneOfferType(skus, 'K');
+            var z = sameItemDiscountsOfferWithOneOfferType(skus, 'Q');
+            var v = sameItemDiscountsOfferWithOneOfferType(skus, 'P');
 
-            while (ecount >= 2 && bcount > 0) {
-                bcount -= 1;
-                ecount -= 2;
-            }
-            // var bprice = ((bcount / 2) * 45) + ((bcount % 2) * 30);
+            var a = crossItemDiscountOffers(skus, 'A');
+            var h = crossItemDiscountOffers(skus, 'H');
 
-            sameItemDiscountsOfferWithOneOfferType('B', skus);
-            sameItemDiscountsOfferWithOneOfferType('K', skus);
-            sameItemDiscountsOfferWithOneOfferType('Q', skus);
-            sameItemDiscountsOfferWithOneOfferType('P', skus);
+//            while (ecount >= 2 && bcount > 0) {
+//                bcount -= 1;
+//                ecount -= 2;
+//            }
+//            // var bprice = ((bcount / 2) * 45) + ((bcount % 2) * 30);
+//
+//
+//            var bonusFprice = 0;
+//            while (fcount >= 3) {
+//                bonusFprice += 2 * 10;
+//                fcount -= 3;
+//            }
+//            var fprice = bonusFprice + (fcount * 10);
 
-            var bonusFprice = 0;
-            while (fcount >= 3) {
-                bonusFprice += 2 * 10;
-                fcount -= 3;
-            }
-            var fprice = bonusFprice + (fcount * 10);
-
-            return itemsWithoutOfferPrice;
+            return itemsWithoutOfferPrice + x + y + z + v + a + h;
         }
         return -1;
     }
@@ -108,18 +101,26 @@ public class CheckoutSolution {
                                           int batchSize2, int discountedPrice2, int originalPrice) {
         var totalPrice = 0;
 
-        
+        var bigBatch = Math.max(batchSize1, batchSize2);
+        var smallBatch = Math.min(batchSize1, batchSize2);
 
-//        while (acount.get('A') >= 5) {
-//            bonusAprice += (acount.get('A') / 5) * 200;
-//            if (acount.get('A') % 5 == 0) {
-//                acount.put('A', 0);
-//                break;
-//            }
-//            acount -= 5;
-//        }
-//        var aprice = ((acount / 3) * 130) + ((acount % 3) * 50) + bonusAprice;
+        var pricier = Math.max(discountedPrice1, discountedPrice2);
+        var cheaper = Math.min(discountedPrice1, discountedPrice2);
 
+        var bigBundleCount = quantity / bigBatch;
+        var remainingItemsFromBigBatch = quantity % bigBatch;
+
+        var smallBundleCount = remainingItemsFromBigBatch / smallBatch;
+        var allRemainingItems = remainingItemsFromBigBatch % smallBatch;
+
+        if (quantity >= bigBundleCount * bigBatch) {
+            totalPrice += bigBundleCount * pricier;
+            if (remainingItemsFromBigBatch >= smallBundleCount * smallBatch) {
+                totalPrice += smallBundleCount * cheaper;
+            }
+        }
+        totalPrice += allRemainingItems * originalPrice;
+        return totalPrice;
     }
 
     private int getSingleItemCount(String skus, char sku) {
@@ -156,8 +157,12 @@ public class CheckoutSolution {
             var totalPrice = 0;
             switch (sku) {
                 case 'A' -> {
+                    var acount = getSingleItemCount(skus, 'A');
+                    totalPrice = twoTypeBatchDiscountPrice(acount, 3, 130, 5, 200, 50);
                 }
                 case 'H' -> {
+                    var hcount = getSingleItemCount(skus, 'H');
+                    totalPrice = twoTypeBatchDiscountPrice(hcount, 5, 45, 10, 80, 10);
                 }
             }
             return totalPrice;
@@ -165,4 +170,3 @@ public class CheckoutSolution {
     }
 
 }
-
