@@ -57,17 +57,6 @@ public class CheckoutSolution {
                 totalPrice += totalPriceForSku(sku, quantity);
             }
 
-//            var a = sameItemDiscountsOfferWithTwoOfferType(skus, 'A');
-//            var h = sameItemDiscountsOfferWithTwoOfferType(skus, 'H');
-//            var vv = sameItemDiscountsOfferWithTwoOfferType(skus, 'V');
-//
-//            var x = sameItemDiscountsOfferWithOneOfferType(skus, 'B');
-//            var y = sameItemDiscountsOfferWithOneOfferType(skus, 'K');
-//            var z = sameItemDiscountsOfferWithOneOfferType(skus, 'Q');
-//            var v = sameItemDiscountsOfferWithOneOfferType(skus, 'P');
-//
-//            var itemsWithoutOfferPrice = itemsWithoutOfferTotalPrice(counts);
-
             return totalPrice;
         }
         return -1;
@@ -131,22 +120,13 @@ public class CheckoutSolution {
         Set<Character> TWO_TYPE_OFFER_ITEMS = Set.of('A', 'H', 'V');
         Set<Character> ONE_TYPE_OFFER_ITEMS = Set.of('B', 'K', 'P', 'Q');
 
-        if(TWO_TYPE_OFFER_ITEMS.contains(sku)) {twoTypeOfferPricing(sku, quantity);}
-        else if (ONE_TYPE_OFFER_ITEMS.contains(sku)) {oneTypeOfferPricing(sku, quantity);}
-        else noOfferPricing()
-    }
-
-    private int noOfferPricing(Map<Character, Integer> itemsCount) {
-        var totalPrice = 0;
-        var itemsToConsider = PRICE_BY_SKU.keySet().stream().
-                filter(ch -> !itemsWithBatchDiscounts.contains(ch)).toList();
-
-        for (char ch : itemsToConsider) {
-            var itemCount = itemsCount.getOrDefault(ch, 0);
-            var itemPrice = PRICE_BY_SKU.get(ch);
-            totalPrice += itemPrice * itemCount;
+        if (TWO_TYPE_OFFER_ITEMS.contains(sku)) {
+            return twoTypeOfferPricing(sku, quantity);
         }
-        return totalPrice;
+        if (ONE_TYPE_OFFER_ITEMS.contains(sku)) {
+            return oneTypeOfferPricing(sku, quantity);
+        }
+        return quantity * PRICE_BY_SKU.get(sku);
     }
 
     private int oneTypeOfferPricing(char sku, int quantity) {
@@ -159,7 +139,8 @@ public class CheckoutSolution {
                 case 'Q' -> totalPrice = oneTypeBatchDiscountPrice(quantity, 80, 3, PRICE_BY_SKU.get(sku));
             }
             return totalPrice;
-        } else return 0;
+        }
+        return 0;
     }
 
     private int twoTypeOfferPricing(char sku, int quantity) {
@@ -174,7 +155,9 @@ public class CheckoutSolution {
                         twoTypeBatchDiscountPrice(quantity, 2, 90, 3, 130, PRICE_BY_SKU.get(sku));
             }
             return totalPrice;
-        } else return 0;
+        }
+        return 0;
     }
 
 }
+
