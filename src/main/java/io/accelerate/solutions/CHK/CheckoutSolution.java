@@ -57,7 +57,12 @@ public class CheckoutSolution {
                 bcount -= 1;
                 ecount -= 2;
             }
-            var bprice = ((bcount / 2) * 45) + ((bcount % 2) * 30);
+            // var bprice = ((bcount / 2) * 45) + ((bcount % 2) * 30);
+
+            sameItemDiscountsOfferWithOneOfferType('B', skus);
+            sameItemDiscountsOfferWithOneOfferType('K', skus);
+            sameItemDiscountsOfferWithOneOfferType('Q', skus);
+            sameItemDiscountsOfferWithOneOfferType('P', skus);
 
             var bonusFprice = 0;
             while (fcount >= 3) {
@@ -94,43 +99,86 @@ public class CheckoutSolution {
         return totalPrice;
     }
 
-    private int sameItemDiscountsOffer(char sku, int effectiveOfferCount, int discountedPrice, String skus) {
-        if (itemsWithBatchDiscounts.contains(sku)) {
-            var totalPrice = 0;
-            switch (sku) {  // todo refactor to use another logic instead of switch case
-                case 'A': {
-                    var bonusAprice = 0;
-                    while (acount.get('A') >= 5) {
-                        bonusAprice += (acount.get('A') / 5) * 200;
-                        if (acount.get('A') % 5 == 0) {
-                            acount.put('A', 0);
-                            break;
-                        }
-                        acount -= 5;
-                    }
-                    var aprice = ((acount / 3) * 130) + ((acount % 3) * 50) + bonusAprice;
-                    break;
-                }
+    private int oneTypeBatchDiscountPrice(int quantity, int discountedPrice, int discountedBatchSize, int originalPrice) {
+        var totalPrice = 0;
+        return totalPrice + (((quantity / discountedBatchSize) * discountedPrice) + ((quantity % 2) * originalPrice));
+    }
 
-                case 'B':
-                case 'K':
-                case 'P':
-                case 'Q': {
-                    totalPrice += (  / effectiveOfferCount) *discountedPrice)
-                    +((bcount % effectiveOfferCount) * PRICE_BY_SKU.get(sku));
-                    break;
-                }
+    private int twoTypeBatchDiscountPrice(int quantity, int batchSize1, int discountedPrice1,
+                                          int batchSize2, int discountedPrice2, int originalPrice) {
+        var totalPrice = 0;
 
-                case 'F':
-                case 'H':
-                case 'U':
-                case 'V':
+        while (acount.get('A') >= 5) {
+            bonusAprice += (acount.get('A') / 5) * 200;
+            if (acount.get('A') % 5 == 0) {
+                acount.put('A', 0);
+                break;
             }
+            acount -= 5;
+        }
+        var aprice = ((acount / 3) * 130) + ((acount % 3) * 50) + bonusAprice;
+
+    }
+
+    private int getSingleItemCount(String skus, char sku) {
+        return getItemsCount(skus).getOrDefault(sku, 0); //todo refactor this
+    }
+
+    private int sameItemDiscountsOfferWithOneOfferType(String skus, char sku) {
+        if (itemsWithBatchDiscounts.contains(sku)) {
+            int totalPrice = 0;
+            switch (sku) {  // todo refactor to use another logic instead of switch case
+//                case 'A': {
+//                    var bonusAprice = 0;
+//                    while (acount.get('A') >= 5) {
+//                        bonusAprice += (acount.get('A') / 5) * 200;
+//                        if (acount.get('A') % 5 == 0) {
+//                            acount.put('A', 0);
+//                            break;
+//                        }
+//                        acount -= 5;
+//                    }
+//                    var aprice = ((acount / 3) * 130) + ((acount % 3) * 50) + bonusAprice;
+//                    break;
+//                }
+
+                case 'B' -> {
+                    var bcount = getSingleItemCount(skus, 'B');
+                    totalPrice = oneTypeBatchDiscountPrice(bcount, 45, 2, PRICE_BY_SKU.get('B'));
+                }
+                case 'K' -> {
+                    var kcount = getSingleItemCount(skus, 'K');
+                    totalPrice = oneTypeBatchDiscountPrice(kcount, 150, 2, PRICE_BY_SKU.get('K'));
+                }
+                case 'P' -> {
+                    var pcount = getSingleItemCount(skus, 'P');
+                    totalPrice = oneTypeBatchDiscountPrice(pcount, 200, 5, PRICE_BY_SKU.get('P'));
+                }
+                case 'Q' -> {
+                    var qcount = getSingleItemCount(skus, 'Q');
+                    totalPrice = oneTypeBatchDiscountPrice(qcount, 80, 3, PRICE_BY_SKU.get('Q'));
+                }
+
+//                case 'F':
+//                case 'H':
+//                case 'U':
+//                case 'V':
+            }
+            return totalPrice;
         } else return 0;
     }
 
-//    private int crossItemDiscountOffers() {
-//    }
+    private int crossItemDiscountOffers(String skus, char sku) {
+        if (itemsWithBatchDiscounts.contains(sku)) {
+            var totalPrice = 0;
+            switch (sku) {
+                case 'A' -> {
+                }
+                case 'H' -> {
+                }
+            }
+            return totalPrice;
+        } else return 0;
+    }
 
 }
-
